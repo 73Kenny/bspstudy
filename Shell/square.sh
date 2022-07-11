@@ -1,7 +1,7 @@
 #!/bin/bash
 # filename square
 
-int=3
+int=1
 
 while [ $int -le 5 ]
 do
