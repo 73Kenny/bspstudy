@@ -1,4 +1,2 @@
 # Test .gitignore
-testignore
-*.c
-*.h
+.gitignore
