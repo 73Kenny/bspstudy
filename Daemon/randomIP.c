@@ -2,6 +2,7 @@
 #include <signal.h> 
 #include <fcntl.h>
 #include <sys/syslog.h>
+#include <sys/wait.h>
 #include <sys/param.h> 
 #include <sys/types.h> 
 #include <sys/stat.h> 
@@ -79,24 +80,41 @@ int main(int argc, char *argv[])
 		lines++;
 	}
 
+	int tmp = lines;
 	while(1)
 	{
 		fseek(fp, 0, SEEK_SET);
-		srand( (int)time(0) );
-		lines = rand() % lines + 1;
+		srand( (unsigned int)time(NULL) );
+		lines = rand() % tmp;
+		printf("lines: %d\n", lines);
 		move = 0;
 		while (move < lines)
 		{
 			fscanf(fp, "%s", str);
 			move++;
 		}
-
-		strcpy(command, "ifconfig eno0 ");
+	
+		strcpy(command, "ifconfig eno1 ");
 		strcat(command, str);
 		strcat(command, " netmask 255.255.255.0");
-		execl("/bin/sh", "sh", "-c", command, NULL);	
-		//system(command);
-		sleep(5);
+		puts(str);
+
+		pid_t pid = fork();
+		if (0 == pid)
+		{
+			execl("/bin/sh", "sh", "-c", command, NULL);	
+		}
+		else if (pid > 0)
+		{
+			wait(NULL);
+		}
+
+
+	//	system(command); // 使用system()函数比较简单，但但使用时应注意在编写具有 SUID/SGID 权限的程序时请勿使用system(), system()会继承环境变量, 通过环境变量可能会造成系统安全的问题.
+
+		
+
+		sleep(60 * 5);
 	}
 
 	fclose(fp);
