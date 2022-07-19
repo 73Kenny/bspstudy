@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 
 		
 
-		sleep(60 * 5);
+		sleep(1);
 	}
 
 	fclose(fp);

@@ -35,6 +35,9 @@ int main(int argc, char* argv[])
 
     if ( pid == 0) // 子进程
     {
+		close(fd_pipe1[1]);
+		close(fd_pipe2[0]);
+
         char str[50] = {0};
         read(fd_pipe1[0], str, sizeof(str)); // 从管道1里读小写字符串
 		strcpy(str, strupr(str));			 // 转换小写字符串为大写字符串
@@ -43,6 +46,9 @@ int main(int argc, char* argv[])
     }
     else if ( pid > 0) // 父进程
     {
+		close(fd_pipe1[0]);
+		close(fd_pipe2[1]);
+
         char buf[] = "i am the test string.";
         write(fd_pipe1[1], buf, strlen(buf)); // 往管道1里写小写字符串
 
