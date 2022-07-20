@@ -23,8 +23,8 @@ int main()
 			wait_mark = 1;
 			signal(SIGINT, stop); // 为信号SIGINT注册相应的处理函数stop
 			waiting();
-			kill(p1, 16); // 为进程p1发送信号16(SIGSTKFLT)
-			kill(p2, 17); // 为进程p2发送信号17(SIGCHLD), 信号接收不一定是这个顺序
+			kill(p1, 10); // 为进程p1发送信号16(SIGSTKFLT)
+			kill(p2, 12); // 为进程p2发送信号17(SIGCHLD), 信号接收不一定是这个顺序
 			wait(0);
 			wait(0);
 			printf("Parent process is killed!\n");
@@ -37,7 +37,7 @@ int main()
 			sigaddset(&sigs, SIGINT); // 将信号SIGINT添加到信号集sigs中
 			sigprocmask(SIG_BLOCK, &sigs, 0); // 将信号集sigs中的信号添加到屏蔽字中
 			wait_mark = 1;
-			signal(17, stop); // 为信号17(SIGCHLD)注册相应的处理函数stop
+			signal(12, stop); // 为信号17(SIGCHLD)注册相应的处理函数stop
 			waiting();
 			lockf(stdout, 1, 0); // 标准输出加锁
 			printf("Child process 2 is killed by parent!\n");
@@ -52,7 +52,7 @@ int main()
 		sigaddset(&sigs, SIGINT);
 		sigprocmask(SIG_BLOCK, &sigs, 0);
 		wait_mark = 1;
-		signal(16, stop); // 为信号16(SISTKFLT)注册相应的处理函数stop
+		signal(10, stop); // 为信号16(SISTKFLT)注册相应的处理函数stop
 		waiting();
 		lockf(stdout, 1, 0);
 		printf("Child process 1 is killed by parent!\n");
