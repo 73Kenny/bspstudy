@@ -8,7 +8,7 @@ int main(void)
 {
 	FILE* fp1;
 	FILE* fp2;
-	int tmp[SIZE];
+	char tmp[SIZE];
 
 	if ((fp1 = fopen("烈火战马(Live)--GAI周延.mp3", "rb")) == NULL)
 	{
@@ -25,10 +25,10 @@ int main(void)
 	int validCount = 0;
 
 	// 每个数据块为sizeof(int) 读取SIZE块 缓冲区tmp = int * SIZE
-	while ( (validCount = fread(tmp, sizeof(int), SIZE, fp1)) != 0 )
+	while ( (validCount = fread(tmp, sizeof(char), SIZE, fp1)) != 0 )
 	{
 		printf("%d\n", validCount);
-		fwrite(tmp, sizeof(int), validCount, fp2);
+		fwrite(tmp, sizeof(char), validCount, fp2);
 	}
 
 	fclose(fp1);
