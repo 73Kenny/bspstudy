@@ -102,7 +102,7 @@ int main()
 
 
 			// 输出
-            printf("\r"); // 光标回到行首
+            // printf("\r"); // 光标回到行首
             printFormatTime(format);
 			printf("\r%s: %s\n%s: ", other_name, msg2.mtext, my_name);
             fflush(stdout);

@@ -8,6 +8,9 @@
 #include <sys/msg.h>
 #include <time.h>
 #include <utime.h>
+#include "sysmen.h"
+
+char* tmp;
 
 void printFormatTime(char * format)
 {
@@ -36,6 +39,11 @@ typedef struct
 
 int main()
 {
+	int shmid;
+	tmp = shmlnk(50, 1024, 0600 | IPC_CREAT , &shmid);
+	memset(tmp, 0, 1024);
+	setvbuf(stdin, tmp, _IOLBF, BUFSIZ);
+
     FILE *fp;
     key_t key;
     pid_t pid;
@@ -87,10 +95,14 @@ int main()
             fclose(fp);
 
 			// 输出
-			printf("\r"); // 光标回到行首
+			// printf("\r"); // 光标回到行首
 			printFormatTime(format);
             printf("\r%s: %s\n%s: ", other_name, msg2.mtext, my_name);
+
             fflush(stdout); // 清空文件缓冲区
+
+			puts("flag1");
+			printf("\r%s", tmp);
         }
     }
     else // 父进程
@@ -101,9 +113,16 @@ int main()
             memset(msg1.mtext, 0, 100); // 刷新消息正文
             printf("%s: ", my_name);	// 输出我的名字
             fgets(buf, 100, stdin);		// 输入聊天信息
+			puts("flag2");
             buf[strlen(buf)-1] = '\0';
             strcpy(msg1.mtext, buf);	// 将聊天信息放在缓冲区mtext
             msgsnd(msgid, &msg1, sizeof(msg1.mtext), 0); // 发送聊天消息
+
+
         }
     }
+
+	
+
+
 }
