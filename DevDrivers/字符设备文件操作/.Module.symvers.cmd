@@ -1,0 +1,1 @@
+cmd_/home/ts/Kenny/bspstudy/DevDrivers/字符设备文件操作/Module.symvers := sed 's/\.ko$$/\.o/' /home/ts/Kenny/bspstudy/DevDrivers/字符设备文件操作/modules.order | scripts/mod/modpost -m -a  -o /home/ts/Kenny/bspstudy/DevDrivers/字符设备文件操作/Module.symvers -e -i Module.symvers   -T -

@@ -1,0 +1,1 @@
+cmd_/home/ts/Kenny/bspstudy/DevDrivers/字符设备文件操作/modules.order := {   echo /home/ts/Kenny/bspstudy/DevDrivers/字符设备文件操作/hello.ko; :; } | awk '!x[$$0]++' - > /home/ts/Kenny/bspstudy/DevDrivers/字符设备文件操作/modules.order
